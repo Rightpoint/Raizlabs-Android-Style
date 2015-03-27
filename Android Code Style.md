@@ -341,7 +341,7 @@ public void setData(String data) {
 }
 
 ```
-  3. There is nothing to say about a `@param` or javadoc element
+  - There is nothing to say about a `@param` or javadoc element
 
 
 [back to top](#tableOfContents)
@@ -366,15 +366,16 @@ public class MyClass {
 - Variables and methods always use camel case
 
 ```java
-	// like this
-	private TextView titleTextView;
+
+// like this
+private TextView titleTextView;
 
 
-	// and this
-	public void performLongRunningOperation();
+// and this
+public void performLongRunningOperation();
 
-  // not this
-  private CheckBox mCheckBox;
+// not this
+private CheckBox mCheckBox;
 
 ```
 
@@ -389,6 +390,7 @@ public TextView getTextView() {
 }
 
 ```
+
 	- Instead, prefix the variable name with a relevant descriptor
 
 ```java
@@ -450,7 +452,9 @@ public static final String TAG_FRAGMENT_PRODUCT_DETAILS = "ProductDetailsFragmen
 public String getRunningStateText(boolean isApplicationRunning, int stringResourceId)
 
 ```
+
 	- Not preferred:
+
 
 ```java
 
@@ -463,9 +467,9 @@ public void methodName(Delegate delegate, Object obj)
 
 ```java
 
-		public void someMethodFoo(Object param,
-									int otherParam,
-									float anotherParam) {
+public void someMethodFoo(Object param,
+							int otherParam,
+							float anotherParam) {
 ```
 
 [back to top](#tableOfContents)
@@ -493,19 +497,18 @@ public void setClickCount(int count) {
 
 ```java
 
+private boolean isAwesome;
 
-		private boolean isAwesome;
+public boolean isAwesome() {
+  return isAwesome;
+}
+public void setAwesome(boolean isAwesome) {
+  this.isAwesome = isAwesome;
+}
 
-		public boolean isAwesome() {
-      return isAwesome;
-    }
-		public void setAwesome(boolean isAwesome) {
-      this.isAwesome = isAwesome;
-    }
-
-		public boolean hasAwesomeAnimations() {
-      return true;
-    }
+public boolean hasAwesomeAnimations() {
+  return true;
+}
 
 ```
 
@@ -542,29 +545,60 @@ as annotation processors
 ### [Operators](id:operators)<a name="operators"></a>
 - Unary operators stick to the number they modify:
 
-		int x = -10;
-		int y = (x * -3);
+```java
+
+int x = -10;
+int y = (x * -3);
+
+```
 
 - Use spaces between all binary and ternary mathematical operators:
 - Fully parenthesize mathematical expressions and any logical expression with 1+ operator
 
+```java
+
 		int x = ((1 + 1) / 1);
 
+```
+
 - Conditional expressions must be enclosed in parentheses:
+
+```java
 
 		String largeString = (x > 200) ? "large" : "small";
 		boolean isLargeString = (x > 200);
 
+```
+
+- Multiple, longer expressions _must_ break on the operator:
+
+```java
+
+if (condition == null ||
+        condition.isTrue() ||
+        someotherCondition.looksBad()) {
+
+}
+
+```
+
 - Non-expressions in ternary conditional operators do not need parentheses:
+
+```java
 
 		String loadingString = this.isLoading() ? true : false;
 
+```
 
-- No nesting of ternary expressions
+- **No** nesting of ternary expressions
 
-- Don't even think about it
+  - Don't even think about it
 
-		boolean dontDoThis = this.otherBoolean ? ((this.dont) ? this.do : this.it) : this.please;
+```java
+
+boolean dontDoThis = this.otherBoolean ? ((this.dont) ? this.do : this.it) : this.please;
+
+```
 
 [back to top](#tableOfContents)
 
@@ -572,36 +606,41 @@ as annotation processors
 ### [If statements](id:ifelse)<a name="ifelse"></a>
 
 - **NEVER** forgo the brackets for one-line if statements ([#gotofail](https://www.imperialviolet.org/2014/02/22/applebug.html) anyone?)
-	- Very simple inline ifs are acceptable
-
-			if (param == null) return;
 - One space between the control keyword and opening parentheses
 - Opening brace same line as conditional-if/else, one space
 - Continuing keywords (else if/else) on the same line as closing braces
 - All braces and keywords are flush left and code within braces are indented with a tab
 
-	- Preferred:
+	- Do:
 
-			if (expression) {
-				// if code
-			} else if (other expression) {
-				// else if code
-			} else {
-				// else code
-			}
+```java
 
-	- Not Preferred:
+if (expression) {
+	// if code
+} else if (other expression) {
+	// else if code
+} else {
+	// else code
+}
 
-			if (expression)
-			{ // shouldn't be on next line
-				// if code
-			}
-			else if (expression) // else shouldn't start on new line
-			{
-				// else if code
-			}
-			else
-				// else code // NEVER forgo brackets
+```
+
+	- Don't do:
+
+```java
+
+if (expression)
+{ // shouldn't be on next line
+// if code
+}
+else if (expression) // else shouldn't start on new line
+{
+// else if code
+}
+else
+// else code // NEVER forgo brackets
+
+```
 
 [back to top](#tableOfContents)
 
@@ -611,89 +650,78 @@ as annotation processors
 -  If a case has more than one line code (other than the break), surround that case's body with braces
 -  One space between the switch keyword and the open parenthesis, one space between the close parenthesis and the opening brace.
 
-		switch (expression) {
-		case 1:
-			// code
-			break;
-		case 2:
-			// code
-			// code
-			break;
-		default:
-			// default code
-			break;
-		}
+```java
+
+switch (expression) {
+  case 1:
+  	// code
+  	break;
+  case 2:
+  	// code
+  	// code
+  	break;
+  default:
+  	// default code
+  	break;
+}
+```
 
 - We strongly encourage you to put comments at the **end** of fall-through statements
 
-		switch ( expression ) {
-		case 1:
-			// case 1 code
-			break;
-		case 2: // fall-through
-		case 3:
-		    // code executed for values 2 and 3
-		   	break;
-		default:
-			// default code
-		    break;
+```java
+
+		switch (expression) {
+  		case 1:
+  			// case 1 code
+  			break;
+  		case 2: // fall-through
+  		case 3:
+  		    // code executed for values 2 and 3
+  		   	break;
+  		default:
+  			  // default code
+  		    break;
 		}
+
+```
 
 - Do not use a default if there isn't any handling for the default case
 
-	Preferred:
+	- Do:
 
-		switch ( expression ) {
-		case 1:
-			// case 1 code
-			break;
-		default:
-		    // default code
-		    // more default code
-		    break;
-		}
+```java
 
-	Not Preferred:
+switch (expression) {
+  case 1:
+  	// case 1 code
+  	break;
+  default:
+      // default code
+      // more default code
+      break;
+}
 
-		switch ( expression ) {
-			case 1: {
-				// case 1 code
-				break;
-			}
-		    default: // nothing here, no need for default!
-		    	break;
-		}
+```
 
+	- Don't do:
+
+```java
+
+switch (expression) {
+	case 1: {
+		// case 1 code
+		break;
+	}
+  default: // nothing here, no need for default!
+  	break;
+}
+```
 
 [back to top](#tableOfContents)
 
 ### [Imports](id:imports)<a name="imports"></a>
 
-- Imports should be broken into groups in the following order, delineated by a new line. Genearlly, your application package imports should be last.
-	- java
-	- javax
-	- org
-	- android
-	- com
-
-			package com.raizlabs.MyApp;
-
-			import java.io.IOException;
-			import java.io.InputStream;
-
-			import javax.crypto.Cipher;
-
-			import org.apache.http.client.HttpClient;
-
-			import android.content.Context;
-			import android.util.AttributeSet;
-			import android.widget.ScrollView;
-
-			import com.raizlabs.functions.Delegate;
-
-			public class MyScrollView extends ScrollView {
-				...
-			}
+- In general, use the Android Studio **organize imports** feature
 
 [back to top](#tableOfContents)
 
