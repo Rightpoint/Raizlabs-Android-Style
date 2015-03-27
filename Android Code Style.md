@@ -1,12 +1,14 @@
 ## [Raizlabs Android Style Guide](id:tableOfContents)<a name="tableOfContents"></a>
 
+[Gradle](#gradle)
+
 [Class Organization](#organization)
 
 [Whitespace](#whitespace)
 
 [Line Length](#linelength)
 
-[In-Line Comments](#inlinecomments)
+[Comments](#inlinecomments)
 
 [Naming](#naming)
 
@@ -15,6 +17,8 @@
 [Method signatures](#methods)
 
 [Getters, Setters, and Member Variables](#getters)
+
+[Privacy](#privacy)
 
 [Operators](#operators)
 
@@ -25,6 +29,198 @@
 [Imports](#imports)
 
 ***
+
+### [Gradle](id:gradle)<a name="gradle"></a>
+
+#### Project build.gradle format
+
+- the format and organization of the project's `build.gradle` must follow:
+  - plugin declarations
+  - project property initialization
+  - local variable initialization
+  - any local repositories, in general should reside in the top-level `build.gradle`
+  - `android{}` configuration enclosure
+    - compileSDK  and build tools version
+    - `defaultConfig` enclosure with versionCode, versionName, and minSdkVersion
+      - these should _never_ go in the `AndroidManifest.xml`
+    - All project should use Java 7 so define a `compileOptions{}`
+    - pacakaging optins
+    - `productFlavors{}`
+    - `buildTypes{}`
+  - `dependencies` block
+    - group dependencies of logical significance such as by google/android,
+      remote RZ libraries, third party libraries, local projects, jars, etc.)
+  - custom `Task`
+  - `apply from:` declarations
+
+```groovy
+
+apply plugin: 'com.android.application'
+
+// local variable
+version = 1.0.0
+
+repositories {
+    mavenCentral()
+    maven { url "https://raw.github.com/Raizlabs/maven-releases/master/releases" }
+}
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22"
+
+    defaultConfig {
+        versionCode 2203
+        versionName "2.2.3"
+        minSdkVersion 14
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+    flavorDimensions "country"
+
+    productFlavors {
+
+        us {
+            flavorDimension "country"
+        }
+
+        ca {
+            applicationId "com.costco.app.android.ca"
+            flavorDimension "country"
+        }
+    }
+
+    buildTypes {
+
+        debug {
+            debuggable true
+        }
+
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+    }
+
+}
+
+dependencies {
+
+    compile 'com.android.support:support-v4:22.0.0'
+
+}
+
+
+```
+
+[back to top](#tableOfContents)
+
+#### Product Flavors and Build Types
+
+- You _should_ expect to use multiple `productFlavors` in a project
+  - These should be named relative to the project's api or app type
+  - define a `flavorDimension` to enable (if needed) multiple dimensions
+
+  - Do:
+
+```groovy
+
+flavorDimensions "endpoint"
+
+productFlavors {
+  staging {
+    flavorDimension "endpoint"
+  }
+
+  live {
+    flavorDimension "live"
+  }
+}
+
+```
+
+  - Don't:
+
+```groovy
+
+productFlavors {
+  signed {
+
+  }
+}
+
+
+```
+
+- We will only ever need two kinds of `buildTypes`: `debug` and `release`
+- `debug` is signed with the `debug.keystore` file on your local machine
+- the `release` type is signed with your application's keystore for release to the Play Store.
+
+```groovy
+
+buildTypes {
+
+    debug {
+        debuggable true
+    }
+
+    release {
+        minifyEnabled false
+        signingConfig signingConfigs.release
+    }
+}
+
+```
+
+#### Release Signing
+
+- git repos for projects should _never_ store the valid `storePassword` and `keyPassword`
+  - rather we place dummy `keystorePassword.gradle` and `keystoreInfo.gradle` files in our project
+
+- `keystoreInfo.gradle`
+
+```groovy
+
+android {
+    signingConfigs {
+        release {
+            storeFile file("../release_key.keystore")
+            keyAlias "alias name"
+        }
+    }
+}
+
+```
+
+- `keystorePassword.gradle`
+
+```groovy
+
+android {
+    signingConfigs {
+        release {
+            storePassword "KEYSTORE_PASSWORD"
+            keyPassword "ALIAS_PASSWORD"
+        }
+    }
+}
+
+```
+
+- apply these to your project's build.gradle
+
+
+[back to top](#tableOfContents)
+
 
 ### [Class Organization](id:organization)<a name="organization"></a>
 
@@ -557,7 +753,7 @@ int y = (x * -3);
 
 ```java
 
-		int x = ((1 + 1) / 1);
+int x = ((1 + 1) / 1);
 
 ```
 
@@ -565,8 +761,8 @@ int y = (x * -3);
 
 ```java
 
-		String largeString = (x > 200) ? "large" : "small";
-		boolean isLargeString = (x > 200);
+String largeString = (x > 200) ? "large" : "small";
+boolean isLargeString = (x > 200);
 
 ```
 
@@ -586,7 +782,7 @@ if (condition == null ||
 
 ```java
 
-		String loadingString = this.isLoading() ? true : false;
+String loadingString = this.isLoading() ? true : false;
 
 ```
 
@@ -670,18 +866,18 @@ switch (expression) {
 
 ```java
 
-		switch (expression) {
-  		case 1:
-  			// case 1 code
-  			break;
-  		case 2: // fall-through
-  		case 3:
-  		    // code executed for values 2 and 3
-  		   	break;
-  		default:
-  			  // default code
-  		    break;
-		}
+switch (expression) {
+	case 1:
+		// case 1 code
+		break;
+	case 2: // fall-through
+	case 3:
+	    // code executed for values 2 and 3
+	   	break;
+	default:
+		  // default code
+	    break;
+}
 
 ```
 
@@ -724,27 +920,3 @@ switch (expression) {
 - In general, use the Android Studio **organize imports** feature
 
 [back to top](#tableOfContents)
-
-
-### [XML Conventions](id:xmlconventions)<a name="xmlconventions"></a>
-- Where applicable, related resources should be combined into one file
-	- Ex: Text sizes, colors, styles, etc should all be consolidated into a values/text.xml
-- Names should generally follow a pattern of most general to most specific.
-	- Per Android, some identifiers may not contain capitals. Use camel case and periods where you can, but fall back to underscores where they cannot be used.
-	- Ex: text_product_details.xml, R.style.Text_ProductDetails_Header
-- Layout resources should be prepended with the intended usage
-	- Common use identifiers:
-		- activity : activity layout
-		- fragment : fragment layout
-		- view : custom view layout
-		- list_item : list view cell
-	- Examples:
-		- layout/activity_main.xml
-		- layout/view_hours.xml
-		- layout/list_item_product.xml
-- IDs should start with their file name to avoid naming collisions.
-	- Exception: IDs or views which are intentionally shared between files
-	- For brevity, camel case should be used where underscores were used in place of spaces.
-		- layout/list_item_product.xml -> android:id="@+id/listItem_product_name"
-		- layout/view_product_details.xml -> android:id="@+id/view_productDetails_name"
-- Value IDs should be period delimited
