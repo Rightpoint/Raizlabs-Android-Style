@@ -94,7 +94,7 @@ android {
         }
 
         ca {
-            applicationId "com.costco.app.android.ca"
+            applicationId "com.raizlabs.anotherapplicationid"
             flavorDimension "country"
         }
     }
@@ -142,7 +142,7 @@ productFlavors {
   }
 
   live {
-    flavorDimension "live"
+    flavorDimension "endpoint"
   }
 }
 
@@ -156,14 +156,18 @@ productFlavors {
   signed {
 
   }
+
+  unsigned {
+
+  }
 }
 
 
 ```
 
 - We will only ever need two kinds of `buildTypes`: `debug` and `release`
-- `debug` is signed with the `debug.keystore` file on your local machine
-- the `release` type is signed with your application's keystore for release to the Play Store.
+  - `debug` is signed with the `debug.keystore` file on your local machine
+  - the `release` type is signed with your application's keystore for release to the Play Store.
 
 ```groovy
 
