@@ -483,26 +483,21 @@ AlertDialog.Builder builder = new AlertDialog.Builder(context)
 
 #### Special comment identifiers
 
-```// !!!:```
-
-    (Not standard Java. Use anyway?)
-
-	   - Use to comment code that mitigates OS bugs, code that could in the future be eliminated or changed when something out of our control is fixed
-
-
 ```// TODO:```
 
-			- Use when code is committed but is intentionally left incomplete, i.e. empty method bodies whose implementation is part of another sprint-planned issue
+- Use when code is committed but is intentionally left incomplete, i.e. empty method bodies whose implementation is part of another sprint-planned issue
+- Use for any changes that need to occur later in the following code (i.e dummy data or a quick hack)
 
 ```/* */```
-      - generally these should _never_ be used
+- generally these should _never_ be used
+- Comments need not extend more than single or 2 line comments. Instead simply use `//`. If the code you're writing requires more, we would suggest splitting up the comments or rewriting the code.
 
 #### Block Comments
 
-  - Block comments should _only_ apply to class, interface, variable or method declarations.
+- Block comments should _only_ apply to class, interface, variable or method declarations.
   Do **not** use them inside of methods.
 
-  - For class/interface headers:
+- For class/interface headers:
 
 ```java
 
@@ -515,7 +510,7 @@ public class MyClass {
 
 ```
 
-  - For methods:
+- For methods:
 
 ```java
 
@@ -531,6 +526,12 @@ public String myMethod(String paramName) {
 
 ```
 
+- For variables:
+
+/*
+ * The screen size of the device that's used multiple times within this class object.
+ */
+private int screenSize;
 
 #### Projects
 
