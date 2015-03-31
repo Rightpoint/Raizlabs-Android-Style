@@ -254,30 +254,52 @@ android {
 	- Any other methods
 	- Anonymous class members
 	- Inner class definitions
+- In general, use regions for each of these sections. 
+	- Although it's _technically_ optional to name the `endregion`, for readability when regions are very long, it's required to name the `endregion` the same as the `region` itself. 
 
-- Example:
+```java
+
+// region Constants
+
+..code goes here
+
+// endregion Constants
+
+```
+
+#### Example Class File
 
 ```java
 
 public class MyView extends ViewGroup {
 
-	// Constants
-	public static String EXTRA_BAR = "Bar";
+	// region Constants
+	
+	public static final String EXTRA_BAR = "Bar";
+	private static final String TAG_FOO = "Foo";
 
-	private static String TAG_FOO = "Foo";
+	//endregion Constants
 
-	// Public interfaces
+
+	// region Public interfaces
+	
 	public interface ActionListener {
 
 		public void onActionPerformed(Object action);
 	}
+	
+	//endregion Public interfaces
 
-	// Static methods
+	// region Static methods
+	
 	public static Object getThing() {
 		return null;
 	}
+	
+	// endregion Static methods
 
-	// Private members and getters/setters
+	// region Private members and getters/setters
+	
 	private int textColor;
 	public int getTextColor() { 
 		return textColor; 
@@ -287,18 +309,28 @@ public class MyView extends ViewGroup {
 	}
 
 	private LinearLayout itemLayout;
+	
+	// endregion Private members and getters/setters
 
-	// Other trivial getters
+
+	// region Other trivial getters
+	
 	public int getItemCount() { 
 		return itemLayout.getChildCount(); 
 	}
+	
+	// endregion Other trivial getters
 
-	// Constructors
+	// region Constructors
+	
 	public MyView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
+	
+	// endregion Constructors
 
-	// Lifecycle methods
+	// region Lifecycle methods
+	
 	@Override
 	protected void onAttachedToWindow() {
 		super.onAttachedToWindow();
@@ -308,36 +340,52 @@ public class MyView extends ViewGroup {
 	protected void onDetachedFromWindow() {
 		super.onDetachedFromWindow();
 	}
+	
+	// endregion Lifecycle methods
 
-	// Inherited methods
+	// region Inherited methods
+	
 	@Override
 	protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
 		...
 	}
+	
+	// endregion Inherited methods
 
-	// Other methods
+	// region methods
+	
 	public void sortChildren() {
 		...
 	}
+	
+	// endregion methods
 
-	// Anonymous class members
+	// region Anonymous class members
+	
 	private OnClickListener childClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			...
 		}
 	};
+	
+	// endregion Anonymous class members
 
-	// Inner class definitions
+	// region Inner class definitions
+	
 	private static class StateHelper {
 		...
 	}
+	
+	// endregion Inner class definitions
 }
 ```
 
 - These rules may be circumvented if the replacement organization makes more sense
 
 ```java
+
+// region Constructors
 
 public MyView(Context context) {
 	super(context);
@@ -354,10 +402,13 @@ public MyView(Context context, AttributeSet attrs, int defStyle) {
 	init();
 }
 
+
 private void init() {
 	// Shared constructor logic
 	...
 }
+
+// endregion Constructors
 
 ```
 
@@ -615,7 +666,7 @@ public TextView getTextView() {
 
 ```
 
-	- Instead, prefix the variable name with a relevant descriptor
+- Instead, prefix the variable name with a relevant descriptor
 
 ```java
 
@@ -638,6 +689,7 @@ public static final String TAG_FRAGMENT_PRODUCT_DETAILS = "ProductDetailsFragmen
 
 ### [Constants](id:constants)<a name="constants"></a>
 - Stand alone constants should be defined at the top of the relevant class file and defined in all caps, delimited by underscores. These should be moved into shared common files/classes if they are consumed by multiple classes.
+- Should _always_ be CAPITALIZED (private, protected, package local, and public!)
 
 ```java
 
@@ -687,13 +739,13 @@ public void methodName(Delegate delegate, Object obj)
 
 ```
 
-	- Tab-align parameters if the declaration spans multiple lines:
+- Tab-align parameters if the declaration spans multiple lines:
 
 ```java
 
 public void someMethodFoo(Object param,
-							int otherParam,
-							float anotherParam) {
+			int otherParam,
+			float anotherParam) {
 ```
 
 [back to top](#tableOfContents)
