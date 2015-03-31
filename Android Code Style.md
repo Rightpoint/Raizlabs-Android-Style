@@ -36,35 +36,34 @@
 
 - the format and organization of the project's `build.gradle` must follow:
   - plugin declarations
+  - `apply from:` file declarations
   - project property initialization
   - local variable initialization
-  - any local repositories, in general should reside in the top-level `build.gradle`
   - `android{}` configuration enclosure
     - compileSDK  and build tools version
     - `defaultConfig` enclosure with versionCode, versionName, and minSdkVersion
       - these should _never_ go in the `AndroidManifest.xml`
     - All project should use Java 7 so define a `compileOptions{}`
-    - pacakaging optins
-    - `productFlavors{}`
+    - packaging options to exclude any duplicate files from java libraries
+    - `flavorDimensions` and `productFlavors{}`
     - `buildTypes{}`
   - `dependencies` block
     - group dependencies of logical significance such as by google/android,
       remote RZ libraries, third party libraries, local projects, jars, etc.)
-  - custom `Task`
-  - `apply from:` declarations
+  - any custom `Task` or local `build.gradle` methods defined.
 
 ```groovy
 
+// plugin declaration
 apply plugin: 'com.android.application'
 
-// local variable
+// apply from file
+apply from: '../keystorePassword.gradle`
+
+// project property
 version = 1.0.0
 
-repositories {
-    mavenCentral()
-    maven { url "https://raw.github.com/Raizlabs/maven-releases/master/releases" }
-}
-
+// android enclosure
 android {
     compileSdkVersion 22
     buildToolsVersion "22"
@@ -105,8 +104,8 @@ android {
             debuggable true
         }
 
+	// always use release for signing
         release {
-            minifyEnabled false
             signingConfig signingConfigs.release
         }
     }
@@ -115,8 +114,23 @@ android {
 
 dependencies {
 
+    // google android dependencies
     compile 'com.android.support:support-v4:22.0.0'
 
+    // third party remote libraries
+    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
+
+    // third party local jars should reference EXACT files
+    compile files('libs/mylib.jar', `libs/anotherjar.jar`) 
+    
+    // third party local projects
+    compile project(':Libraries:StickyListHeaders')
+    
+    // Raizlabs remote libraries
+    compile 'com.raizlabs.android:CoreUtils:1.0.0`
+    
+    // Raizlabs local projects
+    compile project(':Libraries:CoreUtils:CoreUtils`)
 }
 
 
