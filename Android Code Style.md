@@ -121,16 +121,16 @@ dependencies {
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
 
     // third party local jars should reference EXACT files
-    compile files('libs/mylib.jar', `libs/anotherjar.jar`) 
+    compile files('libs/mylib.jar', 'libs/anotherjar.jar') 
     
     // third party local projects
     compile project(':Libraries:StickyListHeaders')
     
     // Raizlabs remote libraries
-    compile 'com.raizlabs.android:CoreUtils:1.0.0`
+    compile 'com.raizlabs.android:CoreUtils:1.0.0'
     
     // Raizlabs local projects
-    compile project(':Libraries:CoreUtils:CoreUtils`)
+    compile project(':Libraries:CoreUtils:CoreUtils')
 }
 
 
