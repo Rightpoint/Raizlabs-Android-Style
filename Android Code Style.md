@@ -528,10 +528,13 @@ public String myMethod(String paramName) {
 
 - For variables:
 
+```java
 /*
  * The screen size of the device that's used multiple times within this class object.
  */
 private int screenSize;
+
+```
 
 #### Projects
 
