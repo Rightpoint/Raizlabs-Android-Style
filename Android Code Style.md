@@ -279,13 +279,19 @@ public class MyView extends ViewGroup {
 
 	// Private members and getters/setters
 	private int textColor;
-	public int getTextColor() { return textColor; }
-	public void setTextColor(int color) { this.textColor = color; }
+	public int getTextColor() { 
+		return textColor; 
+	}
+	public void setTextColor(int color) { 
+		this.textColor = color; 
+	}
 
 	private LinearLayout itemLayout;
 
 	// Other trivial getters
-	public int getItemCount() { return itemLayout.getChildCount(); }
+	public int getItemCount() { 
+		return itemLayout.getChildCount(); 
+	}
 
 	// Constructors
 	public MyView(Context context, AttributeSet attrs, int defStyle) {
