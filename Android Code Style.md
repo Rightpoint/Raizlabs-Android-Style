@@ -116,6 +116,12 @@ dependencies {
 
     // google android dependencies
     compile 'com.android.support:support-v4:22.0.0'
+    
+     // Raizlabs remote libraries
+    compile 'com.raizlabs.android:CoreUtils:1.0.0'
+    
+    // Raizlabs local projects
+    compile project(':Libraries:CoreUtils:CoreUtils')
 
     // third party remote libraries
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
@@ -125,12 +131,7 @@ dependencies {
     
     // third party local projects
     compile project(':Libraries:StickyListHeaders')
-    
-    // Raizlabs remote libraries
-    compile 'com.raizlabs.android:CoreUtils:1.0.0'
-    
-    // Raizlabs local projects
-    compile project(':Libraries:CoreUtils:CoreUtils')
+   
 }
 
 
@@ -148,15 +149,11 @@ dependencies {
 
 ```groovy
 
-flavorDimensions "endpoint"
-
 productFlavors {
   staging {
-    flavorDimension "endpoint"
   }
 
   live {
-    flavorDimension "endpoint"
   }
 }
 
@@ -179,8 +176,8 @@ productFlavors {
 
 ```
 
-- We will only ever need two kinds of `buildTypes`: `debug` and `release`
-  - `debug` is signed with the `debug.keystore` file on your local machine
+- We will probably ever need two kinds of `buildTypes`: `debug` and `release`
+  - `debug` is signed with the shared `debug.keystore` that you copy on your local machine
   - the `release` type is signed with your application's keystore for release to the Play Store.
 
 ```groovy
@@ -192,7 +189,6 @@ buildTypes {
     }
 
     release {
-        minifyEnabled false
         signingConfig signingConfigs.release
     }
 }
@@ -221,6 +217,8 @@ android {
 
 - `keystorePassword.gradle`
 
+// note later to comment on how to ignore changes to file
+
 ```groovy
 
 android {
@@ -241,21 +239,28 @@ android {
 
 
 ### [Class Organization](id:organization)<a name="organization"></a>
+- Order of visiblity should always follow this:
+	- static
+	- public
+	- package private
+	- protected
+	- private
 
 - Class files should generally have their members defined in the following order:
-	- Constants (public, then private)
-	- Public interface declarations
-	- Static variables with any associated methods (public, then private)
-	- Private members, along with related trivial getters/setters
-	- Any other trivial getters/setters
-	- Constructors
-	- Life cycle methods
-	- Inherited / Interface methods
-	- Any other methods
-	- Anonymous class members
-	- Inner class definitions
+	- Constants (public, then private) -> Constants
+	- Interface declarations -> Interface Declarations
+	- Static variables with any associated methods (public, then private) -> Statics
+	- Members variables -> Members
+	- Constructors -> Constructors
+	- Related trivial getters/setters -> Accessors
+	- Life cycle methods -> Lifecycle
+	- Inherited / Interface methods -> Inherited Methods
+	- Abstract methods -> Abstract Methods
+	- Any other methods (public first, protected, private) -> Instance Methods
+	- Anonymous class members -> Anonymous Classes
+	- Inner class definitions( static first then non) -> Inner Classes
 - In general, use regions for each of these sections. 
-	- Although it's _technically_ optional to name the `endregion`, for readability when regions are very long, it's required to name the `endregion` the same as the `region` itself. 
+	- Always name an `endregion` with the same as the `region` itself. 
 
 ```java
 
