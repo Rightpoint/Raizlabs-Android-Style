@@ -285,25 +285,27 @@ public class MyView extends ViewGroup {
 
 	//endregion Constants
 
-
-	// region Public interfaces
+	// region Interfaces
 	
 	public interface ActionListener {
-
+		
+		/*
+		 * Put a comment here to describe this method
+		 */
 		public void onActionPerformed(Object action);
 	}
 	
-	//endregion Public interfaces
+	//endregion Interfaces
 
-	// region Static methods
+	// region Statics
 	
 	public static Object getThing() {
 		return null;
 	}
 	
-	// endregion Static methods
+	// endregion Statics
 
-	// region Private members and getters/setters
+	// region Accessors
 	
 	private int textColor;
 	public int getTextColor() { 
@@ -315,7 +317,7 @@ public class MyView extends ViewGroup {
 
 	private LinearLayout itemLayout;
 	
-	// endregion Private members and getters/setters
+	// endregion Accessors
 
 
 	// region Other trivial getters
