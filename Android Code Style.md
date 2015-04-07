@@ -249,6 +249,7 @@ android {
 - Class files should generally have their members defined in the following order:
 	- Constants (public, then private) -> Constants
 	- Interface declarations -> Interface Declarations
+	- Enums -> Enums
 	- Static variables with any associated methods (public, then private) -> Statics
 	- Members variables -> Members
 	- Constructors -> Constructors
@@ -453,7 +454,7 @@ private void init() {
 
 ### [Line Length](id:linelength)<a name="linelength"></a>
 
-Single lines should not exceed **80** characters in length (Studio will show a vertical bar
+Single lines should not exceed **120** characters in length (Studio will show a vertical bar
 where the text should end).
 
 - For lines longer than *80* characters, break:
@@ -545,6 +546,7 @@ AlertDialog.Builder builder = new AlertDialog.Builder(context)
 
 - Use when code is committed but is intentionally left incomplete, i.e. empty method bodies whose implementation is part of another sprint-planned issue
 - Use for any changes that need to occur later in the following code (i.e dummy data or a quick hack)
+- Should not ship with them in the code
 
 ```/* */```
 - generally these should _never_ be used
@@ -575,7 +577,7 @@ public class MyClass {
 /*
  * This method description tells me any quirks or non-obvious things about it.
 
- * @param   paramName Any parameter that is worth explaining please document, otherwise leave out!
+ * @param   paramName Describe the parameter
  * @return  Describe what we return. Omit the description when the return explains the method.
  */
 public String myMethod(String paramName) {
@@ -584,15 +586,7 @@ public String myMethod(String paramName) {
 
 ```
 
-- For variables:
-
-```java
-/*
- * The screen size of the device that's used multiple times within this class object.
- */
-private int screenSize;
-
-```
+- For variables: if they're not self explanatory, a small block comment should suffice.
 
 #### Projects
 
@@ -600,7 +594,7 @@ private int screenSize;
   - All public & protected methods (when methods aren't self-documenting)
   - Custom interfaces and their corresponding methods
   - Any `newInstance()` or creator for an Android component such as a `Fragment` ,
-`Activity`, or `View`
+`Activity`, or `View` that take extra parameters.
 
 #### Open Source
 
@@ -608,7 +602,6 @@ Comments for open source projects _must_ go on:
 
   - All public elements such as class files, methods, variables, etc.
   - Inside methods with explanation for any tricky logic or not-easily readable logic
-  - Private variables and their basic usage
 
 #### Comments Never When...
 
@@ -623,8 +616,6 @@ public void setData(String data) {
 }
 
 ```
-  - There is nothing to say about a `@param` or javadoc element
-
 
 [back to top](#tableOfContents)
 
@@ -639,8 +630,8 @@ public class MyClass {
   public int publicField;
   private static MyClass singleton;
   int packagePrivate;
-  private int private;
-  protected int protected;
+  private int privateVariable;
+  protected int protectedVariable;
 }
 
 ```
@@ -691,6 +682,7 @@ public TextView getTitleTextView() {
 public static final String TAG_FRAGMENT_PRODUCT_DETAILS = "ProductDetailsFragment";
 
 ```
+- checkout android docs on this
 
 [back to top](#tableOfContents)
 
