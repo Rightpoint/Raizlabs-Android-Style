@@ -28,62 +28,108 @@
 
 [Gradle](#gradle)
 
-***
-
 
 ### [Class Organization](id:organization)<a name="organization"></a>
+- Order of visiblity should always follow this:
+	- static
+	- public
+	- package private
+	- protected
+	- private
 
 - Class files should generally have their members defined in the following order:
-	- Constants (public, then private)
-	- Public interface declarations
-	- Static variables with any associated methods (public, then private)
-	- Private members, along with related trivial getters/setters
-	- Any other trivial getters/setters
-	- Constructors
-	- Life cycle methods
-	- Inherited / Interface methods
-	- Any other methods
-	- Anonymous class members
-	- Inner class definitions
+	- Constants (public, then private) -> Constants
+	- Interface declarations -> Interface Declarations
+	- Enums -> Enums
+	- Static variables with any associated methods (public, then private) -> Statics
+	- Members variables -> Members
+	- Constructors -> Constructors
+	- Related trivial getters/setters -> Accessors
+	- Life cycle methods -> Lifecycle
+	- Inherited / Interface methods -> Inherited Methods
+	- Abstract methods -> Abstract Methods
+	- Any other methods (public first, protected, private) -> Instance Methods
+	- Anonymous class members -> Anonymous Classes
+	- Inner class definitions( static first then non) -> Inner Classes
+- In general, use regions for each of these sections.
+	- Always name an `endregion` with the same name as the `region` itself.
 
-- Example:
+```java
+
+// region Constants
+
+..code goes here
+
+// endregion Constants
+
+```
+
+#### Example Class File
 
 ```java
 
 public class MyView extends ViewGroup {
 
-	// Constants
-	public static String EXTRA_BAR = "Bar";
+	// region Constants
 
-	private static String TAG_FOO = "Foo";
+	public static final String EXTRA_BAR = "Bar";
+	private static final String TAG_FOO = "Foo";
 
-	// Public interfaces
+	//endregion Constants
+
+	// region Interfaces
+
 	public interface ActionListener {
 
+		/*
+		 * Put a comment here to describe this method
+		 */
 		public void onActionPerformed(Object action);
 	}
 
-	// Static methods
+	//endregion Interfaces
+
+	// region Statics
+
 	public static Object getThing() {
 		return null;
 	}
 
-	// Private members and getters/setters
+	// endregion Statics
+
+	// region Accessors
+
 	private int textColor;
-	public int getTextColor() { return textColor; }
-	public void setTextColor(int color) { this.textColor = color; }
+	public int getTextColor() {
+		return textColor;
+	}
+	public void setTextColor(int color) {
+		this.textColor = color;
+	}
 
 	private LinearLayout itemLayout;
 
-	// Other trivial getters
-	public int getItemCount() { return itemLayout.getChildCount(); }
+	// endregion Accessors
 
-	// Constructors
+
+	// region Other trivial getters
+
+	public int getItemCount() {
+		return itemLayout.getChildCount();
+	}
+
+	// endregion Other trivial getters
+
+	// region Constructors
+
 	public MyView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
-	// Lifecycle methods
+	// endregion Constructors
+
+	// region Lifecycle methods
+
 	@Override
 	protected void onAttachedToWindow() {
 		super.onAttachedToWindow();
@@ -94,18 +140,27 @@ public class MyView extends ViewGroup {
 		super.onDetachedFromWindow();
 	}
 
-	// Inherited methods
+	// endregion Lifecycle methods
+
+	// region Inherited methods
+
 	@Override
 	protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
 		...
 	}
 
-	// Other methods
+	// endregion Inherited methods
+
+	// region methods
+
 	public void sortChildren() {
 		...
 	}
 
-	// Anonymous class members
+	// endregion methods
+
+	// region Anonymous class members
+
 	private OnClickListener childClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -113,16 +168,23 @@ public class MyView extends ViewGroup {
 		}
 	};
 
-	// Inner class definitions
+	// endregion Anonymous class members
+
+	// region Inner class definitions
+
 	private static class StateHelper {
 		...
 	}
+
+	// endregion Inner class definitions
 }
 ```
 
 - These rules may be circumvented if the replacement organization makes more sense
 
 ```java
+
+// region Constructors
 
 public MyView(Context context) {
 	super(context);
@@ -139,10 +201,13 @@ public MyView(Context context, AttributeSet attrs, int defStyle) {
 	init();
 }
 
+
 private void init() {
 	// Shared constructor logic
 	...
 }
+
+// endregion Constructors
 
 ```
 
@@ -180,16 +245,16 @@ private void init() {
 
 ### [Line Length](id:linelength)<a name="linelength"></a>
 
-Single lines should not exceed **80** characters in length (Studio will show a vertical bar
+Single lines should not exceed **120** characters in length (Studio will show a vertical bar
 where the text should end).
 
-- For lines longer than *80* characters, break:
+- For lines longer than *120* characters, break:
  - before a method call
  - after a comma
  - after an operator
  - Indent newline by 1 tab.
 
-This is not a hard limit but generally, when possible, code lines should _not_ exceed it.
+This is not a hard limit but generally code lines should _not_ exceed it.
 
 Take this:
 
@@ -246,7 +311,7 @@ AlertDialog.Builder builder = new AlertDialog.Builder(context)
 	- It isn't a good idea to send that info to clients
 - Never reference bug numbers from an external bug tracker (Jira, Github) in code.
 
-#### Double slash comments (```//```)
+#### Single Line Comments
 
 	- One space always immediately after slashes
 	- You _may_ comment "trivial" code if it aids readability in some way (eg. visually distinguishing multiple tasks in a long method)
@@ -266,28 +331,21 @@ AlertDialog.Builder builder = new AlertDialog.Builder(context)
 ```
 
 
-#### Special comment identifiers
-
-```// !!!:```
-
-    (Not standard Java. Use anyway?)
-
-	   - Use to comment code that mitigates OS bugs, code that could in the future be eliminated or changed when something out of our control is fixed
-
+#### TODO
 
 ```// TODO:```
 
-			- Use when code is committed but is intentionally left incomplete, i.e. empty method bodies whose implementation is part of another sprint-planned issue
+- Use when code is committed but is intentionally left incomplete, i.e. empty method bodies whose implementation is part of another sprint-planned issue
+- Use for any changes that need to occur later in the following code (i.e dummy data or a quick hack)
+- Should not ship with them in the code
 
-```/* */```
-      - generally these should _never_ be used
 
 #### Block Comments
 
-  - Block comments should _only_ apply to class, interface, variable or method declarations.
+- Block comments should _only_ apply to class, interface, variable or method declarations.
   Do **not** use them inside of methods.
 
-  - For class/interface headers:
+- For class/interface headers:
 
 ```java
 
@@ -300,14 +358,14 @@ public class MyClass {
 
 ```
 
-  - For methods:
+- For methods:
 
 ```java
 
 /*
  * This method description tells me any quirks or non-obvious things about it.
 
- * @param   paramName Any parameter that is worth explaining please document, otherwise leave out!
+ * @param   paramName Describe the parameter
  * @return  Describe what we return. Omit the description when the return explains the method.
  */
 public String myMethod(String paramName) {
@@ -316,6 +374,7 @@ public String myMethod(String paramName) {
 
 ```
 
+- For variables: if they're not self explanatory, a small block comment should suffice.
 
 #### Projects
 
@@ -323,7 +382,7 @@ public String myMethod(String paramName) {
   - All public & protected methods (when methods aren't self-documenting)
   - Custom interfaces and their corresponding methods
   - Any `newInstance()` or creator for an Android component such as a `Fragment` ,
-`Activity`, or `View`
+`Activity`, or `View` that take extra parameters.
 
 #### Open Source
 
@@ -331,7 +390,6 @@ Comments for open source projects _must_ go on:
 
   - All public elements such as class files, methods, variables, etc.
   - Inside methods with explanation for any tricky logic or not-easily readable logic
-  - Private variables and their basic usage
 
 #### Comments Never When...
 
@@ -346,14 +404,12 @@ public void setData(String data) {
 }
 
 ```
-  - There is nothing to say about a `@param` or javadoc element
-
 
 [back to top](#tableOfContents)
 
 ### [Naming](id:naming)<a name="naming"></a>
 
-- We do _not_ follow the Android standard variable names rather
+- We do _not_ follow the Android standard variable names:
 
 ```java
 
@@ -362,8 +418,8 @@ public class MyClass {
   public int publicField;
   private static MyClass singleton;
   int packagePrivate;
-  private int private;
-  protected int protected;
+  private int privateVariable;
+  protected int protectedVariable;
 }
 
 ```
@@ -396,7 +452,7 @@ public TextView getTextView() {
 
 ```
 
-	- Instead, prefix the variable name with a relevant descriptor
+- Instead, prefix the variable name with a relevant descriptor
 
 ```java
 
@@ -414,11 +470,13 @@ public TextView getTitleTextView() {
 public static final String TAG_FRAGMENT_PRODUCT_DETAILS = "ProductDetailsFragment";
 
 ```
+- checkout android docs on this
 
 [back to top](#tableOfContents)
 
 ### [Constants](id:constants)<a name="constants"></a>
 - Stand alone constants should be defined at the top of the relevant class file and defined in all caps, delimited by underscores. These should be moved into shared common files/classes if they are consumed by multiple classes.
+- Should _always_ be CAPITALIZED (private, protected, package local, and public!)
 
 ```java
 
@@ -468,13 +526,13 @@ public void methodName(Delegate delegate, Object obj)
 
 ```
 
-	- Tab-align parameters if the declaration spans multiple lines:
+- Tab-align parameters if the declaration spans multiple lines:
 
 ```java
 
 public void someMethodFoo(Object param,
-							int otherParam,
-							float anotherParam) {
+			int otherParam,
+			float anotherParam) {
 ```
 
 [back to top](#tableOfContents)
@@ -736,35 +794,34 @@ switch (expression) {
 
 - the format and organization of the project's `build.gradle` must follow:
   - plugin declarations
+  - `apply from:` file declarations
   - project property initialization
   - local variable initialization
-  - any local repositories, in general should reside in the top-level `build.gradle`
   - `android{}` configuration enclosure
     - compileSDK  and build tools version
     - `defaultConfig` enclosure with versionCode, versionName, and minSdkVersion
       - these should _never_ go in the `AndroidManifest.xml`
     - All project should use Java 7 so define a `compileOptions{}`
-    - pacakaging optins
-    - `productFlavors{}`
+    - packaging options to exclude any duplicate files from java libraries
+    - `flavorDimensions` and `productFlavors{}`
     - `buildTypes{}`
   - `dependencies` block
     - group dependencies of logical significance such as by google/android,
       remote RZ libraries, third party libraries, local projects, jars, etc.)
-  - custom `Task`
-  - `apply from:` declarations
+  - any custom `Task` or local `build.gradle` methods defined.
 
 ```groovy
 
+// plugin declaration
 apply plugin: 'com.android.application'
 
-// local variable
+// apply from file
+apply from: '../keystorePassword.gradle`
+
+// project property
 version = 1.0.0
 
-repositories {
-    mavenCentral()
-    maven { url "https://raw.github.com/Raizlabs/maven-releases/master/releases" }
-}
-
+// android enclosure
 android {
     compileSdkVersion 22
     buildToolsVersion "22"
@@ -805,8 +862,8 @@ android {
             debuggable true
         }
 
+	// always use release for signing
         release {
-            minifyEnabled false
             signingConfig signingConfigs.release
         }
     }
@@ -815,7 +872,23 @@ android {
 
 dependencies {
 
+    // google android dependencies
     compile 'com.android.support:support-v4:22.0.0'
+
+     // Raizlabs remote libraries
+    compile 'com.raizlabs.android:CoreUtils:1.0.0'
+
+    // Raizlabs local projects
+    compile project(':Libraries:CoreUtils:CoreUtils')
+
+    // third party remote libraries
+    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
+
+    // third party local jars should reference EXACT files
+    compile files('libs/mylib.jar', 'libs/anotherjar.jar')
+
+    // third party local projects
+    compile project(':Libraries:StickyListHeaders')
 
 }
 
@@ -834,15 +907,11 @@ dependencies {
 
 ```groovy
 
-flavorDimensions "endpoint"
-
 productFlavors {
   staging {
-    flavorDimension "endpoint"
   }
 
   live {
-    flavorDimension "endpoint"
   }
 }
 
@@ -865,8 +934,8 @@ productFlavors {
 
 ```
 
-- We will only ever need two kinds of `buildTypes`: `debug` and `release`
-  - `debug` is signed with the `debug.keystore` file on your local machine
+- We will probably ever need two kinds of `buildTypes`: `debug` and `release`
+  - `debug` is signed with the shared `debug.keystore` that you copy on your local machine
   - the `release` type is signed with your application's keystore for release to the Play Store.
 
 ```groovy
@@ -878,7 +947,6 @@ buildTypes {
     }
 
     release {
-        minifyEnabled false
         signingConfig signingConfigs.release
     }
 }
@@ -907,6 +975,8 @@ android {
 
 - `keystorePassword.gradle`
 
+// note later to comment on how to ignore changes to file
+
 ```groovy
 
 android {
@@ -921,6 +991,3 @@ android {
 ```
 
 - apply these to your project's build.gradle
-
-
-[back to top](#tableOfContents)
