@@ -621,6 +621,8 @@ public void setData(String data) {
 
 ### [Naming](id:naming)<a name="naming"></a>
 
+#### Java
+
 - We do _not_ follow the Android standard variable names rather
 
 ```java
@@ -683,6 +685,68 @@ public static final String TAG_FRAGMENT_PRODUCT_DETAILS = "ProductDetailsFragmen
 
 ```
 - checkout android docs on this
+
+#### Resources
+
+- Similar to other conventions in this document, resources should be named with identifiers from general to most specific.
+- Delimit with underscores.
+- States should be appended to the end of file names. Default states should be appended with `normal`. The resource intended to be consumed by views should have no suffix, regardless of whether it is a selector or otherwise.
+
+##### Drawables
+
+- Follow Android standards for prefixes where appropriate (`ab`, `btn`, `ic`)
+- These typically come from designers so designers should be responsible for naming. Do not rename assets locally as updates will be difficult.
+
+```
+	ic_drawer_home.xml
+	ic_drawer_home_normal.png
+	ic_drawer_home_pressed.png
+	ic_drawer_home_focused.png
+```
+
+##### Layouts
+
+- Layout files should be named based on where they are to be used, starting with a prefix. Use the following prefixes:
+	- `activity` - for layouts to be used as Activity contents.
+	- `fragment` - for layouts to be used as Fragment contents.
+	- `layout` - for layouts to be used in `<include />`s or imported in some other way into another view.
+	- `list_item` - for layouts to be used as the item or cell in a list.
+	- `view` - for layouts which are to be used as some piece of a custom view.
+	- Otherwise, use something which describes the usage in a similar fashion to the above.
+- Layouts which are used in class files should match the name of the class file, but without parts named by the prefix. For example, `ProductDetailsActivity` -> `activity_product_details.xml`
+
+```
+	activity_home.xml
+	list_item_product.xml
+	view_special_button.xml
+```
+
+##### Ids
+
+- Ids in resource files should start with the file name and then append another identifier.
+- If the id gets very long, underscores delimiting spaces may be replaced with camel case.
+	- Underscores delimiting identifiers may *NOT* be replaced.
+	- This is on a per-file basis - if any id in the file follows this pattern, *ALL* ids must.
+
+```
+	android:id="@+id/activity_home_status_text"
+	android:id="@+id/fragment_cart_price"
+	android:id="@+id/fragment_myLongFragmentName_phoneNumberText"
+```
+
+##### Values
+
+- Names should follow a period delimited style with the same rules about identifers being listed from most general to most specific.
+- Files should delimit identifiers with underscores with camel case identifiers (`strings_productDetails`).
+- Place general purpose resources in the standard xml files (`styles.xml`, `strings.xml`, `dimens.xml`, etc.)
+- Place more specific resources in values xml files named after the section or cateogry of the app (`values_products`, `values_cart`, `attrs_myCustomView`).
+	- Strings should always be in their own files for ease of localization (`values_cart`, but strings in `strings_cart`)
+
+```
+	<color name="Drawer.TitleBar" />
+	<dimen name="Cart.ListItem.Height" />
+	<string name="Checkout.ThankYouText" />
+```
 
 [back to top](#tableOfContents)
 
