@@ -1,7 +1,5 @@
 ## [Raizlabs Android Style Guide](id:tableOfContents)<a name="tableOfContents"></a>
 
-[Gradle](#gradle)
-
 [Class Organization](#organization)
 
 [Whitespace](#whitespace)
@@ -28,202 +26,9 @@
 
 [Imports](#imports)
 
+[Gradle](#gradle)
+
 ***
-
-### [Gradle](id:gradle)<a name="gradle"></a>
-
-#### Project build.gradle format
-
-- the format and organization of the project's `build.gradle` must follow:
-  - plugin declarations
-  - project property initialization
-  - local variable initialization
-  - any local repositories, in general should reside in the top-level `build.gradle`
-  - `android{}` configuration enclosure
-    - compileSDK  and build tools version
-    - `defaultConfig` enclosure with versionCode, versionName, and minSdkVersion
-      - these should _never_ go in the `AndroidManifest.xml`
-    - All project should use Java 7 so define a `compileOptions{}`
-    - pacakaging optins
-    - `productFlavors{}`
-    - `buildTypes{}`
-  - `dependencies` block
-    - group dependencies of logical significance such as by google/android,
-      remote RZ libraries, third party libraries, local projects, jars, etc.)
-  - custom `Task`
-  - `apply from:` declarations
-
-```groovy
-
-apply plugin: 'com.android.application'
-
-// local variable
-version = 1.0.0
-
-repositories {
-    mavenCentral()
-    maven { url "https://raw.github.com/Raizlabs/maven-releases/master/releases" }
-}
-
-android {
-    compileSdkVersion 22
-    buildToolsVersion "22"
-
-    defaultConfig {
-        versionCode 2203
-        versionName "2.2.3"
-        minSdkVersion 14
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
-
-    packagingOptions {
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-    }
-
-    flavorDimensions "country"
-
-    productFlavors {
-
-        us {
-            flavorDimension "country"
-        }
-
-        ca {
-            applicationId "com.raizlabs.anotherapplicationid"
-            flavorDimension "country"
-        }
-    }
-
-    buildTypes {
-
-        debug {
-            debuggable true
-        }
-
-        release {
-            minifyEnabled false
-            signingConfig signingConfigs.release
-        }
-    }
-
-}
-
-dependencies {
-
-    compile 'com.android.support:support-v4:22.0.0'
-
-}
-
-
-```
-
-[back to top](#tableOfContents)
-
-#### Product Flavors and Build Types
-
-- You _should_ expect to use multiple `productFlavors` in a project
-  - These should be named relative to the project's api or app type
-  - define a `flavorDimension` to enable (if needed) multiple dimensions
-
-  - Do:
-
-```groovy
-
-flavorDimensions "endpoint"
-
-productFlavors {
-  staging {
-    flavorDimension "endpoint"
-  }
-
-  live {
-    flavorDimension "endpoint"
-  }
-}
-
-```
-
-  - Don't:
-
-```groovy
-
-productFlavors {
-  signed {
-
-  }
-
-  unsigned {
-
-  }
-}
-
-
-```
-
-- We will only ever need two kinds of `buildTypes`: `debug` and `release`
-  - `debug` is signed with the `debug.keystore` file on your local machine
-  - the `release` type is signed with your application's keystore for release to the Play Store.
-
-```groovy
-
-buildTypes {
-
-    debug {
-        debuggable true
-    }
-
-    release {
-        minifyEnabled false
-        signingConfig signingConfigs.release
-    }
-}
-
-```
-
-#### Release Signing
-
-- git repos for projects should _never_ store the valid `storePassword` and `keyPassword`
-  - rather we place dummy `keystorePassword.gradle` and `keystoreInfo.gradle` files in our project
-
-- `keystoreInfo.gradle`
-
-```groovy
-
-android {
-    signingConfigs {
-        release {
-            storeFile file("../release_key.keystore")
-            keyAlias "alias name"
-        }
-    }
-}
-
-```
-
-- `keystorePassword.gradle`
-
-```groovy
-
-android {
-    signingConfigs {
-        release {
-            storePassword "KEYSTORE_PASSWORD"
-            keyPassword "ALIAS_PASSWORD"
-        }
-    }
-}
-
-```
-
-- apply these to your project's build.gradle
-
-
-[back to top](#tableOfContents)
 
 
 ### [Class Organization](id:organization)<a name="organization"></a>
@@ -347,7 +152,7 @@ private void init() {
 ### [Whitespace](id:whitespace)<a name="whitespace"></a>
 
 - Newlines
-    - _Never_ more than one consecutive newline of whitespace.
+    - _Never_ use more than one consecutive newline of whitespace.
     - Use **one** newline of whitespace to separate out conceptually separate bits of methods.
     - _Never_ use a newline before opening braces. Closing braces go on a new line.
 
@@ -922,5 +727,200 @@ switch (expression) {
 ### [Imports](id:imports)<a name="imports"></a>
 
 - In general, use the Android Studio **organize imports** feature
+
+[back to top](#tableOfContents)
+
+### [Gradle](id:gradle)<a name="gradle"></a>
+
+#### Project build.gradle format
+
+- the format and organization of the project's `build.gradle` must follow:
+  - plugin declarations
+  - project property initialization
+  - local variable initialization
+  - any local repositories, in general should reside in the top-level `build.gradle`
+  - `android{}` configuration enclosure
+    - compileSDK  and build tools version
+    - `defaultConfig` enclosure with versionCode, versionName, and minSdkVersion
+      - these should _never_ go in the `AndroidManifest.xml`
+    - All project should use Java 7 so define a `compileOptions{}`
+    - pacakaging optins
+    - `productFlavors{}`
+    - `buildTypes{}`
+  - `dependencies` block
+    - group dependencies of logical significance such as by google/android,
+      remote RZ libraries, third party libraries, local projects, jars, etc.)
+  - custom `Task`
+  - `apply from:` declarations
+
+```groovy
+
+apply plugin: 'com.android.application'
+
+// local variable
+version = 1.0.0
+
+repositories {
+    mavenCentral()
+    maven { url "https://raw.github.com/Raizlabs/maven-releases/master/releases" }
+}
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22"
+
+    defaultConfig {
+        versionCode 2203
+        versionName "2.2.3"
+        minSdkVersion 14
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+    flavorDimensions "country"
+
+    productFlavors {
+
+        us {
+            flavorDimension "country"
+        }
+
+        ca {
+            applicationId "com.raizlabs.anotherapplicationid"
+            flavorDimension "country"
+        }
+    }
+
+    buildTypes {
+
+        debug {
+            debuggable true
+        }
+
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+    }
+
+}
+
+dependencies {
+
+    compile 'com.android.support:support-v4:22.0.0'
+
+}
+
+
+```
+
+[back to top](#tableOfContents)
+
+#### Product Flavors and Build Types
+
+- You _should_ expect to use multiple `productFlavors` in a project
+  - These should be named relative to the project's api or app type
+  - define a `flavorDimension` to enable (if needed) multiple dimensions
+
+  - Do:
+
+```groovy
+
+flavorDimensions "endpoint"
+
+productFlavors {
+  staging {
+    flavorDimension "endpoint"
+  }
+
+  live {
+    flavorDimension "endpoint"
+  }
+}
+
+```
+
+  - Don't:
+
+```groovy
+
+productFlavors {
+  signed {
+
+  }
+
+  unsigned {
+
+  }
+}
+
+
+```
+
+- We will only ever need two kinds of `buildTypes`: `debug` and `release`
+  - `debug` is signed with the `debug.keystore` file on your local machine
+  - the `release` type is signed with your application's keystore for release to the Play Store.
+
+```groovy
+
+buildTypes {
+
+    debug {
+        debuggable true
+    }
+
+    release {
+        minifyEnabled false
+        signingConfig signingConfigs.release
+    }
+}
+
+```
+
+#### Release Signing
+
+- git repos for projects should _never_ store the valid `storePassword` and `keyPassword`
+  - rather we place dummy `keystorePassword.gradle` and `keystoreInfo.gradle` files in our project
+
+- `keystoreInfo.gradle`
+
+```groovy
+
+android {
+    signingConfigs {
+        release {
+            storeFile file("../release_key.keystore")
+            keyAlias "alias name"
+        }
+    }
+}
+
+```
+
+- `keystorePassword.gradle`
+
+```groovy
+
+android {
+    signingConfigs {
+        release {
+            storePassword "KEYSTORE_PASSWORD"
+            keyPassword "ALIAS_PASSWORD"
+        }
+    }
+}
+
+```
+
+- apply these to your project's build.gradle
+
 
 [back to top](#tableOfContents)
