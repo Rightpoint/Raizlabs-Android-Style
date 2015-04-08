@@ -245,8 +245,8 @@ private void init() {
 
 ### [Line Length](id:linelength)<a name="linelength"></a>
 
-Single lines should not exceed **120** characters in length (Studio will show a vertical bar
-where the text should end).
+Single lines should not exceed **120** characters in length. Studio will show a vertical bar
+where the text should end.
 
 - For lines longer than *120* characters, break:
  - before a method call
