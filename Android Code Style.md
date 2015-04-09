@@ -1,7 +1,5 @@
 ## [Raizlabs Android Style Guide](id:tableOfContents)<a name="tableOfContents"></a>
 
-[Gradle](#gradle)
-
 [Class Organization](#organization)
 
 [Whitespace](#whitespace)
@@ -28,214 +26,7 @@
 
 [Imports](#imports)
 
-***
-
-### [Gradle](id:gradle)<a name="gradle"></a>
-
-#### Project build.gradle format
-
-- the format and organization of the project's `build.gradle` must follow:
-  - plugin declarations
-  - `apply from:` file declarations
-  - project property initialization
-  - local variable initialization
-  - `android{}` configuration enclosure
-    - compileSDK  and build tools version
-    - `defaultConfig` enclosure with versionCode, versionName, and minSdkVersion
-      - these should _never_ go in the `AndroidManifest.xml`
-    - All project should use Java 7 so define a `compileOptions{}`
-    - packaging options to exclude any duplicate files from java libraries
-    - `flavorDimensions` and `productFlavors{}`
-    - `buildTypes{}`
-  - `dependencies` block
-    - group dependencies of logical significance such as by google/android,
-      remote RZ libraries, third party libraries, local projects, jars, etc.)
-  - any custom `Task` or local `build.gradle` methods defined.
-
-```groovy
-
-// plugin declaration
-apply plugin: 'com.android.application'
-
-// apply from file
-apply from: '../keystorePassword.gradle`
-
-// project property
-version = 1.0.0
-
-// android enclosure
-android {
-    compileSdkVersion 22
-    buildToolsVersion "22"
-
-    defaultConfig {
-        versionCode 2203
-        versionName "2.2.3"
-        minSdkVersion 14
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
-
-    packagingOptions {
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-    }
-
-    flavorDimensions "country"
-
-    productFlavors {
-
-        us {
-            flavorDimension "country"
-        }
-
-        ca {
-            applicationId "com.raizlabs.anotherapplicationid"
-            flavorDimension "country"
-        }
-    }
-
-    buildTypes {
-
-        debug {
-            debuggable true
-        }
-
-	// always use release for signing
-        release {
-            signingConfig signingConfigs.release
-        }
-    }
-
-}
-
-dependencies {
-
-    // google android dependencies
-    compile 'com.android.support:support-v4:22.0.0'
-    
-     // Raizlabs remote libraries
-    compile 'com.raizlabs.android:CoreUtils:1.0.0'
-    
-    // Raizlabs local projects
-    compile project(':Libraries:CoreUtils:CoreUtils')
-
-    // third party remote libraries
-    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-
-    // third party local jars should reference EXACT files
-    compile files('libs/mylib.jar', 'libs/anotherjar.jar') 
-    
-    // third party local projects
-    compile project(':Libraries:StickyListHeaders')
-   
-}
-
-
-```
-
-[back to top](#tableOfContents)
-
-#### Product Flavors and Build Types
-
-- You _should_ expect to use multiple `productFlavors` in a project
-  - These should be named relative to the project's api or app type
-  - define a `flavorDimension` to enable (if needed) multiple dimensions
-
-  - Do:
-
-```groovy
-
-productFlavors {
-  staging {
-  }
-
-  live {
-  }
-}
-
-```
-
-  - Don't:
-
-```groovy
-
-productFlavors {
-  signed {
-
-  }
-
-  unsigned {
-
-  }
-}
-
-
-```
-
-- We will probably ever need two kinds of `buildTypes`: `debug` and `release`
-  - `debug` is signed with the shared `debug.keystore` that you copy on your local machine
-  - the `release` type is signed with your application's keystore for release to the Play Store.
-
-```groovy
-
-buildTypes {
-
-    debug {
-        debuggable true
-    }
-
-    release {
-        signingConfig signingConfigs.release
-    }
-}
-
-```
-
-#### Release Signing
-
-- git repos for projects should _never_ store the valid `storePassword` and `keyPassword`
-  - rather we place dummy `keystorePassword.gradle` and `keystoreInfo.gradle` files in our project
-
-- `keystoreInfo.gradle`
-
-```groovy
-
-android {
-    signingConfigs {
-        release {
-            storeFile file("../release_key.keystore")
-            keyAlias "alias name"
-        }
-    }
-}
-
-```
-
-- `keystorePassword.gradle`
-
-// note later to comment on how to ignore changes to file
-
-```groovy
-
-android {
-    signingConfigs {
-        release {
-            storePassword "KEYSTORE_PASSWORD"
-            keyPassword "ALIAS_PASSWORD"
-        }
-    }
-}
-
-```
-
-- apply these to your project's build.gradle
-
-
-[back to top](#tableOfContents)
+[Gradle](#gradle)
 
 
 ### [Class Organization](id:organization)<a name="organization"></a>
@@ -260,8 +51,8 @@ android {
 	- Any other methods (public first, protected, private) -> Instance Methods
 	- Anonymous class members -> Anonymous Classes
 	- Inner class definitions( static first then non) -> Inner Classes
-- In general, use regions for each of these sections. 
-	- Always name an `endregion` with the same as the `region` itself. 
+- In general, use regions for each of these sections.
+	- Always name an `endregion` with the same name as the `region` itself.
 
 ```java
 
@@ -280,65 +71,65 @@ android {
 public class MyView extends ViewGroup {
 
 	// region Constants
-	
+
 	public static final String EXTRA_BAR = "Bar";
 	private static final String TAG_FOO = "Foo";
 
 	//endregion Constants
 
 	// region Interfaces
-	
+
 	public interface ActionListener {
-		
+
 		/*
 		 * Put a comment here to describe this method
 		 */
 		public void onActionPerformed(Object action);
 	}
-	
+
 	//endregion Interfaces
 
 	// region Statics
-	
+
 	public static Object getThing() {
 		return null;
 	}
-	
+
 	// endregion Statics
 
 	// region Accessors
-	
+
 	private int textColor;
-	public int getTextColor() { 
-		return textColor; 
+	public int getTextColor() {
+		return textColor;
 	}
-	public void setTextColor(int color) { 
-		this.textColor = color; 
+	public void setTextColor(int color) {
+		this.textColor = color;
 	}
 
 	private LinearLayout itemLayout;
-	
+
 	// endregion Accessors
 
 
 	// region Other trivial getters
-	
-	public int getItemCount() { 
-		return itemLayout.getChildCount(); 
+
+	public int getItemCount() {
+		return itemLayout.getChildCount();
 	}
-	
+
 	// endregion Other trivial getters
 
 	// region Constructors
-	
+
 	public MyView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
-	
+
 	// endregion Constructors
 
 	// region Lifecycle methods
-	
+
 	@Override
 	protected void onAttachedToWindow() {
 		super.onAttachedToWindow();
@@ -348,43 +139,43 @@ public class MyView extends ViewGroup {
 	protected void onDetachedFromWindow() {
 		super.onDetachedFromWindow();
 	}
-	
+
 	// endregion Lifecycle methods
 
 	// region Inherited methods
-	
+
 	@Override
 	protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
 		...
 	}
-	
+
 	// endregion Inherited methods
 
 	// region methods
-	
+
 	public void sortChildren() {
 		...
 	}
-	
+
 	// endregion methods
 
 	// region Anonymous class members
-	
+
 	private OnClickListener childClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			...
 		}
 	};
-	
+
 	// endregion Anonymous class members
 
 	// region Inner class definitions
-	
+
 	private static class StateHelper {
 		...
 	}
-	
+
 	// endregion Inner class definitions
 }
 ```
@@ -426,7 +217,7 @@ private void init() {
 ### [Whitespace](id:whitespace)<a name="whitespace"></a>
 
 - Newlines
-    - _Never_ more than one consecutive newline of whitespace.
+    - _Never_ use more than one consecutive newline of whitespace.
     - Use **one** newline of whitespace to separate out conceptually separate bits of methods.
     - _Never_ use a newline before opening braces. Closing braces go on a new line.
 
@@ -454,16 +245,16 @@ private void init() {
 
 ### [Line Length](id:linelength)<a name="linelength"></a>
 
-Single lines should not exceed **120** characters in length (Studio will show a vertical bar
-where the text should end).
+Single lines should not exceed **120** characters in length. Studio will show a vertical bar
+where the text should end.
 
-- For lines longer than *80* characters, break:
+- For lines longer than *120* characters, break:
  - before a method call
  - after a comma
  - after an operator
  - Indent newline by 1 tab.
 
-This is not a hard limit but generally, when possible, code lines should _not_ exceed it.
+This is not a hard limit but generally code lines should _not_ exceed it.
 
 Take this:
 
@@ -520,7 +311,7 @@ AlertDialog.Builder builder = new AlertDialog.Builder(context)
 	- It isn't a good idea to send that info to clients
 - Never reference bug numbers from an external bug tracker (Jira, Github) in code.
 
-#### Double slash comments (```//```)
+#### Single Line Comments
 
 	- One space always immediately after slashes
 	- You _may_ comment "trivial" code if it aids readability in some way (eg. visually distinguishing multiple tasks in a long method)
@@ -540,7 +331,7 @@ AlertDialog.Builder builder = new AlertDialog.Builder(context)
 ```
 
 
-#### Special comment identifiers
+#### TODO
 
 ```// TODO:```
 
@@ -548,9 +339,6 @@ AlertDialog.Builder builder = new AlertDialog.Builder(context)
 - Use for any changes that need to occur later in the following code (i.e dummy data or a quick hack)
 - Should not ship with them in the code
 
-```/* */```
-- generally these should _never_ be used
-- Comments need not extend more than single or 2 line comments. Instead simply use `//`. If the code you're writing requires more, we would suggest splitting up the comments or rewriting the code.
 
 #### Block Comments
 
@@ -623,7 +411,7 @@ public void setData(String data) {
 
 #### Java
 
-- We do _not_ follow the Android standard variable names rather
+- We do _not_ follow the Android standard variable names:
 
 ```java
 
@@ -1061,3 +849,207 @@ switch (expression) {
 - In general, use the Android Studio **organize imports** feature
 
 [back to top](#tableOfContents)
+
+### [Gradle](id:gradle)<a name="gradle"></a>
+
+#### Project build.gradle format
+
+- the format and organization of the project's `build.gradle` must follow:
+  - plugin declarations
+  - `apply from:` file declarations
+  - project property initialization
+  - local variable initialization
+  - `android{}` configuration enclosure
+    - compileSDK  and build tools version
+    - `defaultConfig` enclosure with versionCode, versionName, and minSdkVersion
+      - these should _never_ go in the `AndroidManifest.xml`
+    - All project should use Java 7 so define a `compileOptions{}`
+    - packaging options to exclude any duplicate files from java libraries
+    - `flavorDimensions` and `productFlavors{}`
+    - `buildTypes{}`
+  - `dependencies` block
+    - group dependencies of logical significance such as by google/android,
+      remote RZ libraries, third party libraries, local projects, jars, etc.)
+  - any custom `Task` or local `build.gradle` methods defined.
+
+```groovy
+
+// plugin declaration
+apply plugin: 'com.android.application'
+
+// apply from file
+apply from: '../keystorePassword.gradle`
+
+// project property
+version = 1.0.0
+
+// android enclosure
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22"
+
+    defaultConfig {
+        versionCode 2203
+        versionName "2.2.3"
+        minSdkVersion 14
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+    flavorDimensions "country"
+
+    productFlavors {
+
+        us {
+            flavorDimension "country"
+        }
+
+        ca {
+            applicationId "com.raizlabs.anotherapplicationid"
+            flavorDimension "country"
+        }
+    }
+
+    buildTypes {
+
+        debug {
+            debuggable true
+        }
+
+	// always use release for signing
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
+
+}
+
+dependencies {
+
+    // google android dependencies
+    compile 'com.android.support:support-v4:22.0.0'
+
+     // Raizlabs remote libraries
+    compile 'com.raizlabs.android:CoreUtils:1.0.0'
+
+    // Raizlabs local projects
+    compile project(':Libraries:CoreUtils:CoreUtils')
+
+    // third party remote libraries
+    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
+
+    // third party local jars should reference EXACT files
+    compile files('libs/mylib.jar', 'libs/anotherjar.jar')
+
+    // third party local projects
+    compile project(':Libraries:StickyListHeaders')
+
+}
+
+
+```
+
+[back to top](#tableOfContents)
+
+#### Product Flavors and Build Types
+
+- You _should_ expect to use multiple `productFlavors` in a project
+  - These should be named relative to the project's api or app type
+  - define a `flavorDimension` to enable (if needed) multiple dimensions
+
+  - Do:
+
+```groovy
+
+productFlavors {
+  staging {
+  }
+
+  live {
+  }
+}
+
+```
+
+  - Don't:
+
+```groovy
+
+productFlavors {
+  signed {
+
+  }
+
+  unsigned {
+
+  }
+}
+
+
+```
+
+- We will probably ever need two kinds of `buildTypes`: `debug` and `release`
+  - `debug` is signed with the shared `debug.keystore` that you copy on your local machine
+  - the `release` type is signed with your application's keystore for release to the Play Store.
+
+```groovy
+
+buildTypes {
+
+    debug {
+        debuggable true
+    }
+
+    release {
+        signingConfig signingConfigs.release
+    }
+}
+
+```
+
+#### Release Signing
+
+- git repos for projects should _never_ store the valid `storePassword` and `keyPassword`
+  - rather we place dummy `keystorePassword.gradle` and `keystoreInfo.gradle` files in our project
+
+- `keystoreInfo.gradle`
+
+```groovy
+
+android {
+    signingConfigs {
+        release {
+            storeFile file("../release_key.keystore")
+            keyAlias "alias name"
+        }
+    }
+}
+
+```
+
+- `keystorePassword.gradle`
+
+// note later to comment on how to ignore changes to file
+
+```groovy
+
+android {
+    signingConfigs {
+        release {
+            storePassword "KEYSTORE_PASSWORD"
+            keyPassword "ALIAS_PASSWORD"
+        }
+    }
+}
+
+```
+
+- apply these to your project's build.gradle
