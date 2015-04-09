@@ -723,15 +723,13 @@ public static final String TAG_FRAGMENT_PRODUCT_DETAILS = "ProductDetailsFragmen
 
 ##### Ids
 
-- Ids in resource files should start with the file name and then append another identifier.
-- If the id gets very long, underscores delimiting spaces may be replaced with camel case.
-	- Underscores delimiting identifiers may *NOT* be replaced.
-	- This is on a per-file basis - if any id in the file follows this pattern, *ALL* ids must.
+- Ids in layout files should start with the file name and then append a camel case view identifier.
+- Ids in other resources should try to match the naming conventions around them as well as possible, or the layout naming convention.
 
 ```
 	android:id="@+id/activity_home_status_text"
 	android:id="@+id/fragment_cart_price"
-	android:id="@+id/fragment_myLongFragmentName_phoneNumberText"
+	android:id="@+id/list_item_product_details_phoneNumber"
 ```
 
 ##### Values
