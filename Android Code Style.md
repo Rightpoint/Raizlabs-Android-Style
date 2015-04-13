@@ -412,7 +412,7 @@ public void setData(String data) {
 
 #### Java
 
-- We do _not_ follow the Android standard variable names:
+- We do _not_ follow the Android standard variable name convetions. Instead:
 
 ```java
 
