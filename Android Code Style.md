@@ -257,7 +257,7 @@ where the text should end.
 
 This is not a hard limit but generally code lines should _not_ exceed it.
 
-Take this:
+For example, given:
 
 ```java
 
@@ -267,7 +267,7 @@ private String getDepartmentName() {
 
 ```
 
-Break on the `?` operator:
+break on the `?` operator:
 
 ```java
 private String getDepartmentName() {
@@ -281,7 +281,7 @@ private String getDepartmentName() {
 For classes that use the **builder** notation, break on _each_ call to the builder class.
 
 
-Do _NOT_ do this
+Do _NOT_:
 
 ```java
 
