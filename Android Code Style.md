@@ -37,20 +37,20 @@
 	- protected
 	- private
 
-- Class files should generally have their members defined in the following order:
-	- Constants (public, then private) -> Constants
-	- Interface declarations -> Interface Declarations
-	- Enums -> Enums
-	- Static variables with any associated methods (public, then private) -> Statics
-	- Members variables -> Members
-	- Constructors -> Constructors
-	- Related trivial getters/setters -> Accessors
-	- Life cycle methods -> Lifecycle
-	- Inherited / Interface methods -> Inherited Methods
-	- Abstract methods -> Abstract Methods
-	- Any other methods (public first, protected, private) -> Instance Methods
-	- Anonymous class members -> Anonymous Classes
-	- Inner class definitions( static first then non) -> Inner Classes
+- Class files should generally have their members defined in the following order with the given region names:
+	- Constants (public, then private) -> `Constants`
+	- Interface declarations -> `Interface Declarations`
+	- Enums -> `Enums`
+	- Static variables with any associated methods (public, then private) -> `Statics`
+	- Members variables -> `Members`
+	- Constructors -> `Constructors`
+	- Getters & Setters -> `Accessors`
+	- Life cycle methods -> `Lifecycle`
+	- Inherited / Interface methods -> `Inherited Methods`
+	- Abstract methods -> `Abstract Methods`
+	- Any other methods (public first, protected, private) -> `Instance Methods`
+	- Anonymous class members -> `Anonymous Classes`
+	- Inner class definitions( static first then non) -> `Inner Classes`
 - In general, use regions for each of these sections.
 	- Always name an `endregion` with the same name as the `region` itself.
 
