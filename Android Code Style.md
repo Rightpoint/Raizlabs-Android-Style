@@ -97,28 +97,13 @@ public class MyView extends ViewGroup {
 
 	// endregion Statics
 
-	// region Accessors
+	// region Members
 
 	private int textColor;
-	public int getTextColor() {
-		return textColor;
-	}
-	public void setTextColor(int color) {
-		this.textColor = color;
-	}
-
+	
 	private LinearLayout itemLayout;
-
-	// endregion Accessors
-
-
-	// region Other trivial getters
-
-	public int getItemCount() {
-		return itemLayout.getChildCount();
-	}
-
-	// endregion Other trivial getters
+	
+	// endregion Members
 
 	// region Constructors
 
@@ -128,7 +113,23 @@ public class MyView extends ViewGroup {
 
 	// endregion Constructors
 
-	// region Lifecycle methods
+	// region Accessors
+	
+	public int getTextColor() {
+		return textColor;
+	}
+	
+	public void setTextColor(int color) {
+		this.textColor = color;
+	}
+	
+	public int getItemCount() {
+		return itemLayout.getChildCount();
+	}
+	
+	// endregion Accessors
+
+	// region Lifecycle Methods
 
 	@Override
 	protected void onAttachedToWindow() {
@@ -140,26 +141,26 @@ public class MyView extends ViewGroup {
 		super.onDetachedFromWindow();
 	}
 
-	// endregion Lifecycle methods
+	// endregion Lifecycle Methods
 
-	// region Inherited methods
+	// region Inherited Methods
 
 	@Override
-	protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+	public boolean requestFocus(int direction, Rect previouslyFocusedRect) {
 		...
 	}
 
-	// endregion Inherited methods
+	// endregion Inherited Methods
 
-	// region methods
+	// region Methods
 
 	public void sortChildren() {
 		...
 	}
 
-	// endregion methods
+	// endregion Methods
 
-	// region Anonymous class members
+	// region Anonymous Classes
 
 	private OnClickListener childClickListener = new OnClickListener() {
 		@Override
@@ -168,15 +169,15 @@ public class MyView extends ViewGroup {
 		}
 	};
 
-	// endregion Anonymous class members
+	// endregion Anonymous Classes
 
-	// region Inner class definitions
+	// region Inner Classes
 
 	private static class StateHelper {
 		...
 	}
 
-	// endregion Inner class definitions
+	// endregion Inner Classes
 }
 ```
 
