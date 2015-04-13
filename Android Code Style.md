@@ -341,10 +341,10 @@ AlertDialog.Builder builder = new AlertDialog.Builder(context)
 - Should not ship with them in the code
 
 
-#### Block Comments
+#### Javadoc
 
-- Block comments should _only_ apply to class, interface, variable or method declarations.
-  Do **not** use them inside of methods.
+- Block comments should _only_ be used for Javadoc on class, interface, variable or method declarations.
+  Do **not** use them inside of methods or other areas for long comments.
 
 - For class/interface headers:
 
@@ -363,7 +363,7 @@ public class MyClass {
 
 ```java
 
-/*
+/**
  * This method description tells me any quirks or non-obvious things about it.
 
  * @param   paramName Describe the parameter
@@ -375,11 +375,11 @@ public String myMethod(String paramName) {
 
 ```
 
-- For variables: if they're not self explanatory, a small block comment should suffice.
+- For variables: if they're not self explanatory, a small comment should suffice.
 
 #### Projects
 
-- Comments for project must at least go on
+- Javadoc is required in projects for:
   - All public & protected methods (when methods aren't self-documenting)
   - Custom interfaces and their corresponding methods
   - Any `newInstance()` or creator for an Android component such as a `Fragment` ,
