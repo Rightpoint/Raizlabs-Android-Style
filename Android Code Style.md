@@ -619,6 +619,7 @@ private boolean isAwesome;
 public boolean isAwesome() {
   return isAwesome;
 }
+
 public void setAwesome(boolean isAwesome) {
   this.isAwesome = isAwesome;
 }
