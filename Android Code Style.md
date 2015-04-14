@@ -1,5 +1,11 @@
 ## [Raizlabs Android Style Guide](id:tableOfContents)<a name="tableOfContents"></a>
 
+
+The style guide is meant to keep our code consistent and easy-to-read between projects. It keeps code quality and organization at a high level, while enabling us to keep writing spectacular code.
+
+In order to keep code style consistent, we include a [settings file](https://github.com/Raizlabs/Raizlabs-Android-Style/blob/master/settings.jar) to add to Android Studio so the configuration is seamless.
+
+
 [Class Organization](#organization)
 
 [Whitespace](#whitespace)
@@ -30,6 +36,7 @@
 
 
 ### [Class Organization](id:organization)<a name="organization"></a>
+- In general, organization is handled by the Android Studio auto-formatting feature.
 - Order of visiblity should always follow this:
 	- static
 	- public
@@ -162,7 +169,7 @@ public class MyView extends ViewGroup {
 
 	// region Anonymous Classes
 
-	private OnClickListener childClickListener = new OnClickListener() {
+	private final OnClickListener childClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			...
@@ -473,7 +480,6 @@ public TextView getTitleTextView() {
 public static final String TAG_FRAGMENT_PRODUCT_DETAILS = "ProductDetailsFragment";
 
 ```
-- checkout android docs on this
 
 #### Resources
 
