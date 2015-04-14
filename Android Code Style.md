@@ -723,10 +723,8 @@ boolean dontDoThis = this.otherBoolean ? ((this.dont) ? this.do : this.it) : thi
 - Continuing keywords (else if/else) on the same line as closing braces
 - All braces and keywords are flush left and code within braces are indented with a tab
 
-	- Do:
-
 ```java
-
+// Do:
 if (expression) {
 	// if code
 } else if (other expression) {
@@ -735,12 +733,7 @@ if (expression) {
 	// else code
 }
 
-```
-
-	- Don't do:
-
-```java
-
+// Don't:
 if (expression)
 { // shouldn't be on next line
 // if code
