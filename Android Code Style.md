@@ -571,21 +571,13 @@ public static final String TAG_FRAGMENT_PRODUCT_DETAILS = "ProductDetailsFragmen
 - Descriptive parameter names
 - Listeners and delegates always on tail of method parameters
 
-Preferred:
-
 ```java
-
+// Prefer this:
 public String getRunningStateText(boolean isApplicationRunning, int stringResourceId)
 
-```
-
-Not preferred:
-
-```java
-
+// Over these:
 public void setT(Object o, Bitmap b)
 public void methodName(Delegate delegate, Object obj)
-
 ```
 
 - Tab-align parameters if the declaration spans multiple lines:
