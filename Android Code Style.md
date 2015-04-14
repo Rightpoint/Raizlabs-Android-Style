@@ -60,6 +60,7 @@ In order to keep code style consistent, we include a [settings file](https://git
 	- Inner class definitions( static first then non) -> `Inner Classes`
 - In general, use regions for each of these sections.
 	- Always name an `endregion` with the same name as the `region` itself.
+- Inner classes keep the structure, but only specify regions when it makes sense.
 
 ```java
 
