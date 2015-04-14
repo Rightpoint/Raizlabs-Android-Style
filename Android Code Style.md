@@ -632,8 +632,6 @@ public boolean hasAwesomeAnimations() {
 
 ### [Privacy](id:privacy)<a name="privacy"></a>
 
-#### Variable Privacy
-
 - **DO NOT** access members directly if getters/setters have been defined.
  	- Unless you have a very good reason
 - **DO NOT** expose members directly.
@@ -649,14 +647,10 @@ public class ViewHolder {
 ```
 - Strongly encourage `private` variables above all else as it encourages encapsulation
 for getters and setters.
-- Use `protected` to members you want to expose to a subclass only
-- Use package local only for:
-  - instances where `private` is not an option such
-as annotation processors
-  -  ViewHolder classes
-  -  ViewModel / struct-like classes
-  -  static fields local to a specific package
-- In general, avoid `public` except when defining constant values or when it makes sense.
+- Use package private when something must be exposed to other classes, but shouldn't be accessed without understanding the innerworkings of the package.
+- Use `protected` for methods that must be accessible to subclasses or are related to internals or settings of class logic. Generally shouldn't be used for variables.
+- Use `public` only when something is core to the provided behavior of the class and is expected to never change. Shouldn't be used for variables except when defining constant values.
+- *When in doubt, err on the side of lower visibility.*
 
 [back to top](#tableOfContents)
 
