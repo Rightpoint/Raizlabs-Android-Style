@@ -635,9 +635,9 @@ public boolean hasAwesomeAnimations() {
 #### Variable Privacy
 
 - **DO NOT** access members directly if getters/setters have been defined.
- 	- Unless you have a very good reason (Parsers/Loaders/Annotation Processing libraries)
+ 	- Unless you have a very good reason
 - **DO NOT** expose members directly.
-- Unless you're writing a "struct-like" class which just wraps other values.
+	- Unless you're writing a "struct-like" class which just wraps other values.
 
 ```java
 
