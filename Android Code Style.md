@@ -539,7 +539,7 @@ public static final String TAG_FRAGMENT_PRODUCT_DETAILS = "ProductDetailsFragmen
 
 ### [Constants](id:constants)<a name="constants"></a>
 - Stand alone constants should be defined at the top of the relevant class file and defined in all caps, delimited by underscores. These should be moved into shared common files/classes if they are consumed by multiple classes.
-- Should _always_ be CAPITALIZED (private, protected, package local, and public!)
+- Should _always_ be CAPITALIZED.
 
 ```java
 
