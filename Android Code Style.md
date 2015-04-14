@@ -571,7 +571,7 @@ public static final String TAG_FRAGMENT_PRODUCT_DETAILS = "ProductDetailsFragmen
 - Descriptive parameter names
 - Listeners and delegates always on tail of method parameters
 
-	- Preferred:
+Preferred:
 
 ```java
 
@@ -579,8 +579,7 @@ public String getRunningStateText(boolean isApplicationRunning, int stringResour
 
 ```
 
-	- Not preferred:
-
+Not preferred:
 
 ```java
 
