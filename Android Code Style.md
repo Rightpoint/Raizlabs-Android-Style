@@ -752,7 +752,6 @@ else
 ### [Switch statements](id:switches)<a name="switches"></a>
 
 -  Braces should be on same line as case
--  If a case has more than one line code (other than the break), surround that case's body with braces
 -  One space between the switch keyword and the open parenthesis, one space between the close parenthesis and the opening brace.
 
 ```java
