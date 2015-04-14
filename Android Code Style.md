@@ -819,6 +819,11 @@ switch (expression) {
 ### [Imports](id:imports)<a name="imports"></a>
 
 - In general, use the Android Studio **organize imports** feature
+- Order in the following groups:
+	- Java
+	- Android
+	- Raizlabs Libraries
+	- App Code
 
 [back to top](#tableOfContents)
 
