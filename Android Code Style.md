@@ -682,7 +682,7 @@ boolean isLargeString = (x > 200);
 
 ```
 
-- Multiple, longer expressions _must_ break on the operator:
+- Multiple, longer expressions must break _after_ the operator:
 
 ```java
 
@@ -702,7 +702,7 @@ String loadingString = this.isLoading() ? true : false;
 
 ```
 
-- **No** nesting of ternary expressions
+- **No** nesting of ternary conditionals
 
   - Don't even think about it
 
