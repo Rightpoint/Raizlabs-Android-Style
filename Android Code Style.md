@@ -791,10 +791,8 @@ switch (expression) {
 
 - Do not use a default if there isn't any handling for the default case
 
-	- Do:
-
 ```java
-
+// Do:
 switch (expression) {
   case 1:
   	// case 1 code
@@ -805,12 +803,7 @@ switch (expression) {
       break;
 }
 
-```
-
-	- Don't do:
-
-```java
-
+// Don't:
 switch (expression) {
 	case 1: {
 		// case 1 code
