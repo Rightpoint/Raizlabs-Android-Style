@@ -322,10 +322,10 @@ AlertDialog.Builder builder = new AlertDialog.Builder(context)
 
 #### Single Line Comments
 
-	- One space always immediately after slashes
-	- You _may_ comment "trivial" code if it aids readability in some way (eg. visually distinguishing multiple tasks in a long method)
-	- You _may_ comment in-line where appropriate. Eg. to identify the closing brace of a nested code block.
-	- In general, put on the line before the code being explained. One newline should come before the comment and after the code fragment being explained to avoid confusion with following code unrelated to comment:
+- One space always immediately after slashes
+- You _may_ comment "trivial" code if it aids readability in some way (eg. visually distinguishing multiple tasks in a long method)
+- You _may_ comment in-line where appropriate. Eg. to identify the closing brace of a nested code block.
+- In general, put on the line before the code being explained. One newline should come before the comment and after the code fragment being explained to avoid confusion with following code unrelated to comment:
 
 ```java
 
