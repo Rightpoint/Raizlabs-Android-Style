@@ -617,7 +617,7 @@ public void setClickCount(int count) {
 
 ```
 
-- Boolean getters should be prefixed with "is" or "has" instead of "get"
+- Boolean members and accessors should be prefixed with "is", "are", or "has"
 
 ```java
 
