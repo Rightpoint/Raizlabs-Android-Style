@@ -519,7 +519,8 @@ public static final String TAG_FRAGMENT_PRODUCT_DETAILS = "ProductDetailsFragmen
 
 ##### Ids
 
-- Ids in layout files should start with the file name and then append a camel case view identifier.
+- Ids in layout files should start with the file name and then append a camel case view identifier. For example, `fragment_drawer` -> `android:id="@+id/fragment_drawer_cellInfo`
+
 - Ids in other resources should try to match the naming conventions around them as well as possible, or the layout naming convention.
 
 ```
