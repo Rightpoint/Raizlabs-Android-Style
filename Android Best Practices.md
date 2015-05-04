@@ -22,7 +22,7 @@ Use text styles / Button styles / Shared dimens etc
 ### [JavaDoc](id:javadoc)<a name="javadoc"></a> 
 - Provide Java Doc comments for any objects or methods which are publicly visible and are likely to be used by another developer.
 	- Exception: Trivial getters/setters
-- **NEVER** include your name or user name. We don't want clients associating any issues with individual developers etc.
+- **Never** include your name or user name. Source control will handle attribution.
 - You must provide:
     - Summary
     - @param descriptions (unless trivially named)
@@ -48,7 +48,7 @@ Use text styles / Button styles / Shared dimens etc
 [back to top](#tableOfContents)
 
 ### [Constants](id:constants)<a name="constants"></a>
-- **ALWAYS** use string resources for user facing strings.
+- **ALWAYS** use string resources for user-facing strings.
 - Define **all** Intent extra keys, Fragment argument keys, FragmentManager tags, etc as final Strings.
 - Move constants into the most general class for their usage.
 	- Break them out into their own file if they are very general purpose (i.e. used across the app) or there are many of them.
@@ -60,8 +60,8 @@ Use text styles / Button styles / Shared dimens etc
 
 			public class Foo {
 				public static class Action {
-					public static final String Add = "add";
-					public static final String Edit = "edit";
+					public static final String ADD = "add";
+					public static final String EDIT = "edit";
 				}
 				
 				...
