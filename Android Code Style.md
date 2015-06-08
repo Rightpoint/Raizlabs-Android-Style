@@ -40,8 +40,8 @@ In order to keep code style consistent, we include a [settings file](https://git
 - Order of visiblity should always follow this:
 	- static
 	- public
-	- package private
 	- protected
+	- package private
 	- private
 
 - Class files should generally have their members defined in the following order with the given region names:
