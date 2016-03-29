@@ -532,16 +532,21 @@ public static final String TAG_FRAGMENT_PRODUCT_DETAILS = "ProductDetailsFragmen
 ##### Values
 
 - Names should follow a period delimited style with the same rules about identifers being listed from most general to most specific.
-- Files should delimit identifiers with underscores with camel case identifiers (`strings_productDetails`).
-- Place general purpose resources in the standard xml files (`styles.xml`, `strings.xml`, `dimens.xml`, etc.)
-- Place more specific resources in values xml files named after the section or cateogry of the app (`values_products`, `values_cart`, `attrs_myCustomView`).
-	- Strings should always be in their own files for ease of localization (`values_cart`, but strings in `strings_cart`)
+- Place resources in the standard xml files (`styles.xml`, `strings.xml`, `dimens.xml`, `colors.xml`, etc.) separating groups of related resources with comments.
 
 ```
-	<color name="Drawer.TitleBar" />
-	<dimen name="Cart.ListItem.Height" />
-	<string name="Checkout.ThankYouText" />
+	<!-- General -->
+
+    <string name="App.Name">Raizlabs</string>
+    <string name="Default.Dialog.Ok">OK</string>
+
+    <!-- Toolbar/FAB -->
+
+    <string name="Toolbar.Menu.Chat">Support</string>
+    <string name="Toolbar.Menu.Share">Share</string>
 ```
+- Delimiting resource files should be done sparingly, as separating resources among several files can clutter the values directory and be cumbersome to work with.
+	-  Should delimting be necessary, files should delimit identifiers with underscores with camel case identifiers (`strings_productDetails`).
 
 [back to top](#tableOfContents)
 
