@@ -530,7 +530,7 @@ public static final String TAG_FRAGMENT_PRODUCT_DETAILS = "ProductDetailsFragmen
 
 ##### Values
 
-- Names should follow a underscore, lowercase delimited style with the same rules about identifers being listed from most general to most specific.
+- Names should follow an underscore, lowercase delimited style with the same rules about identifers being listed from most general to most specific.
 - Files should delimit identifiers with underscores with camel case identifiers (`strings_productDetails`).
 - Place general purpose resources in the standard xml files (`styles.xml`, `strings.xml`, `dimens.xml`, etc.)
 - Place more specific resources in values xml files named after the section or cateogry of the app (`values_products`, `values_cart`, `attrs_myCustomView`).
