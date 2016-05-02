@@ -3,7 +3,7 @@
 
 The style guide is meant to keep our code consistent and easy-to-read between projects. It keeps code quality and organization at a high level, while enabling us to keep writing spectacular code.
 
-In order to keep code style consistent, we include a [settings file](https://github.com/Raizlabs/Raizlabs-Android-Style/blob/master/settings.jar) to add to Android Studio so the configuration is seamless.
+In order to keep code style consistent, we include a [code style JAR file](https://github.com/Raizlabs/Raizlabs-Android-Style/blob/master/rz-android-java-code-style.jar) to add to Android Studio so the configuration is seamless.
 
 
 [Class Organization](#organization)
