@@ -49,8 +49,7 @@ After installing all those pieces, you can put this into your ~/.bash_login file
 Download and install the latest [Android Studio](https://developer.android.com/sdk/index.html)
 because the Android development tools depend on it.
 
-After you have installed Android Studio, download the settings jar from the [Raizlabs-Android-Style](https://github.com/Raizlabs/Raizlabs-Android-Style) 
-repo and then load it into Android Studio by doing File/ImportSettings.
+After you have installed Android Studio, download the [code style JAR file](https://github.com/Raizlabs/Raizlabs-Android-Style/blob/master/rz-android-java-code-style.jar) and then load it into Android Studio by doing File/ImportSettings.
 
 To speed up the build process by 15 seconds, go into Android Studio's preferences and set Gradle to offline mode after you have compiled a project once (you'll have to disable offline mode if you want to update your Gradle project dependencies).
 
